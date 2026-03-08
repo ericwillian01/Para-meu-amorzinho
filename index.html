@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,12 +10,28 @@
 <style>
 
 body{
-font-family: Arial;
-text-align:center;
-background: linear-gradient(135deg,#ff9a9e,#fad0c4);
 margin:0;
-padding:0;
+font-family:Arial;
+text-align:center;
 color:white;
+overflow-x:hidden;
+background:black;
+}
+
+/* fundo estrelado */
+
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+background:url("https://www.transparenttextures.com/patterns/stardust.png");
+animation:starsMove 60s linear infinite;
+z-index:-1;
+}
+
+@keyframes starsMove{
+from{background-position:0 0;}
+to{background-position:1000px 1000px;}
 }
 
 h1{
@@ -23,25 +39,31 @@ margin-top:30px;
 font-size:40px;
 }
 
-p{
-font-size:20px;
+/* slideshow */
+
+.slideshow{
+width:300px;
+margin:auto;
+position:relative;
 }
 
-.galeria{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:10px;
-margin:20px;
-}
-
-.galeria img{
-width:150px;
-height:150px;
-object-fit:cover;
+.slideshow img{
+width:100%;
 border-radius:15px;
-box-shadow:0 0 10px rgba(0,0,0,0.3);
+box-shadow:0 0 15px rgba(255,255,255,0.5);
 }
+
+/* carta */
+
+.carta{
+background:rgba(255,255,255,0.1);
+padding:20px;
+margin:30px;
+border-radius:15px;
+backdrop-filter:blur(5px);
+}
+
+/* botão */
 
 button{
 padding:15px 25px;
@@ -58,22 +80,18 @@ button:hover{
 background:#ff1e4d;
 }
 
+/* corações */
+
 .heart{
 position:fixed;
 top:-10px;
 font-size:20px;
-animation:fall 5s linear infinite;
+animation:fall 5s linear forwards;
 }
 
 @keyframes fall{
-0%{
-transform:translateY(-10px);
-opacity:1;
-}
-100%{
-transform:translateY(100vh);
-opacity:0;
-}
+0%{transform:translateY(-10px);}
+100%{transform:translateY(100vh);}
 }
 
 </style>
@@ -81,6 +99,8 @@ opacity:0;
 </head>
 
 <body>
+
+<div class="stars"></div>
 
 <h1>❤️ Nosso Amor ❤️</h1>
 
@@ -96,26 +116,64 @@ frameborder="0"
 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
 </iframe>
 
-<h2>Nossas Memórias 📸</h2>
+<h2>Nossas fotos 📸</h2>
 
-<div class="galeria">
+<div class="slideshow">
+<img id="fotoSlide" src="foto1.jpg">
+</div>
 
-<img src="foto1.jpg">
-<img src="foto2.jpg">
-<img src="foto3.jpg">
-<img src="foto4.jpg">
-<img src="foto5.jpg">
-<img src="foto6.jpg">
-<img src="foto7.jpg">
-<img src="foto8.jpg">
-<img src="foto9.jpg">
-<img src="foto10.jpg">
+<h2>Carta para você 💌</h2>
+
+<div class="carta">
+
+<p>
+Meu amor,
+
+Desde o dia <b>06/12/2023</b> minha vida mudou completamente.
+Cada momento ao seu lado é especial e cada lembrança que criamos
+fica guardada no meu coração.
+
+Obrigado por existir e por fazer meus dias mais felizes.
+Eu te amo muito ❤️
+</p>
 
 </div>
 
 <button onclick="cairCoracoes()">Eu te amo ❤️</button>
 
 <script>
+
+/* slideshow das fotos */
+
+let fotos=[
+"foto1.jpg",
+"foto2.jpg",
+"foto3.jpg",
+"foto4.jpg",
+"foto5.jpg",
+"foto6.jpg",
+"foto7.jpg",
+"foto8.jpg",
+"foto9.jpg",
+"foto10.jpg"
+];
+
+let index=0;
+
+setInterval(()=>{
+
+index++;
+
+if(index>=fotos.length){
+index=0;
+}
+
+document.getElementById("fotoSlide").src=fotos[index];
+
+},3000);
+
+
+/* corações caindo */
 
 function cairCoracoes(){
 
