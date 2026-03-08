@@ -1,7 +1,5 @@
-// abrir carta
-
+// ABRIR CARTA
 function abrirCarta(){
-
 let carta = document.getElementById("carta");
 
 if(carta.style.display === "block"){
@@ -9,195 +7,138 @@ carta.style.display = "none";
 }else{
 carta.style.display = "block";
 }
-
 }
 
 
-// contador relacionamento
 
-const inicio = new Date("2023-12-06 00:00:00");
-
+// CONTADOR DE TEMPO JUNTOS
 function atualizarContador(){
 
-const agora = new Date();
-const diff = agora - inicio;
+let inicio = new Date("2024-01-01 00:00:00"); // coloque a data que vocês começaram
+let agora = new Date();
 
-const dias = Math.floor(diff / (1000*60*60*24));
-const horas = Math.floor((diff/(1000*60*60)) % 24);
-const minutos = Math.floor((diff/(1000*60)) % 60);
-const segundos = Math.floor((diff/1000) % 60);
+let diferenca = agora - inicio;
+
+let dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+let horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
+let minutos = Math.floor((diferenca / (1000 * 60)) % 60);
+let segundos = Math.floor((diferenca / 1000) % 60);
 
 document.getElementById("contador").innerHTML =
-dias+" dias "+
-horas+" horas "+
-minutos+" minutos "+
-segundos+" segundos ❤️";
+dias + " dias " +
+horas + " horas " +
+minutos + " minutos " +
+segundos + " segundos";
 
 }
 
 setInterval(atualizarContador,1000);
 
 
-// slider fotos automático
 
+// SLIDER DE FOTOS AUTOMÁTICO
 let index = 0;
-const fotos = document.querySelectorAll(".slider img");
 
-setInterval(()=>{
+function trocarFotos(){
 
-fotos.forEach(f=>f.style.display="none");
+let fotos = document.querySelectorAll(".slider img");
+
+for(let i = 0; i < fotos.length; i++){
+fotos[i].style.display = "none";
+}
 
 index++;
 
-if(index>=fotos.length){
-index=0;
+if(index > fotos.length){
+index = 1;
 }
 
-fotos[index].style.display="block";
+fotos[index-1].style.display = "block";
 
-},3000);
+setTimeout(trocarFotos,3000);
+
+}
+
+trocarFotos();
 
 
-// botão eu te amo
 
+// CHUVA DE CORAÇÕES ❤️
 function chuvaCoracoes(){
 
-// mensagem no centro
+alert("Eu também te amo ❤️");
 
-let msg = document.createElement("div");
+for(let i = 0; i < 80; i++){
 
-msg.innerHTML = "Eu também te amo ❤️";
+let coracao = document.createElement("div");
 
-msg.style.position = "fixed";
-msg.style.top = "50%";
-msg.style.left = "50%";
-msg.style.transform = "translate(-50%,-50%)";
-msg.style.fontSize = "40px";
-msg.style.fontWeight = "bold";
-msg.style.textShadow = "0 0 20px red";
-msg.style.zIndex = "1000";
+coracao.innerHTML = "❤️";
+coracao.style.position = "fixed";
+coracao.style.top = "-10px";
+coracao.style.left = Math.random() * 100 + "vw";
+coracao.style.fontSize = (20 + Math.random() * 30) + "px";
+coracao.style.animation = "cair 5s linear";
+coracao.style.zIndex = "9999";
 
-document.body.appendChild(msg);
+document.body.appendChild(coracao);
 
-setTimeout(()=>{
-msg.remove();
-},4000);
-
-
-// chuva de emojis
-
-let emojis = ["🥰","❤️","🫶🏻"];
-
-for(let i=0;i<80;i++){
-
-setTimeout(()=>{
-
-let emoji = document.createElement("div");
-
-emoji.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
-
-emoji.style.position = "fixed";
-emoji.style.top = "-10px";
-emoji.style.left = Math.random()*100+"vw";
-emoji.style.fontSize = "26px";
-emoji.style.animation = "cair 5s linear";
-
-document.body.appendChild(emoji);
-
-setTimeout(()=>{
-emoji.remove();
+setTimeout(() => {
+coracao.remove();
 },5000);
 
-}, i * 120);
-
 }
 
 }
 
 
-// fundo estrelado
 
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
+// FUNDO ESTRELADO
+let canvas = document.getElementById("stars");
+let ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let estrelas=[];
+let estrelas = [];
 
-for(let i=0;i<200;i++){
+for(let i = 0; i < 150; i++){
 
 estrelas.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*2
+x: Math.random() * canvas.width,
+y: Math.random() * canvas.height,
+raio: Math.random() * 2
 });
 
 }
 
-function desenhar(){
+function desenharEstrelas(){
 
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
-ctx.fillStyle="white";
+ctx.fillStyle = "white";
 
-estrelas.forEach(e=>{
+for(let i = 0; i < estrelas.length; i++){
+
+let e = estrelas[i];
 
 ctx.beginPath();
-ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
+ctx.arc(e.x, e.y, e.raio, 0, Math.PI * 2);
 ctx.fill();
 
-e.y += 0.2;
-
-if(e.y > canvas.height){
-e.y = 0;
 }
+
+requestAnimationFrame(desenharEstrelas);
+
+}
+
+desenharEstrelas();
+
+
+
+// AJUSTAR TELA
+window.addEventListener("resize",function(){
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 });
-
-requestAnimationFrame(desenhar);
-
-}
-
-desenhar();
-
-
-// estrela cadente
-
-function estrelaCadente(){
-
-let estrela = {
-x: Math.random() * canvas.width,
-y: 0,
-tamanho: 2 + Math.random()*2,
-velocidadeX: 6,
-velocidadeY: 6
-};
-
-function animar(){
-
-ctx.beginPath();
-ctx.arc(estrela.x, estrela.y, estrela.tamanho, 0, Math.PI*2);
-ctx.fillStyle="white";
-ctx.fill();
-
-estrela.x += estrela.velocidadeX;
-estrela.y += estrela.velocidadeY;
-
-if(estrela.x < canvas.width && estrela.y < canvas.height){
-requestAnimationFrame(animar);
-}
-
-}
-
-animar();
-
-}
-
-setInterval(()=>{
-
-if(Math.random() < 0.4){
-estrelaCadente();
-}
-
-},4000);
