@@ -1,151 +1,199 @@
+// abrir carta
+
 function abrirCarta(){
 
-let carta=document.getElementById("carta")
+let carta = document.getElementById("carta");
 
-if(carta.style.display==="block"){
-
-carta.style.display="none"
-
+if(carta.style.display === "block"){
+carta.style.display = "none";
 }else{
-
-carta.style.display="block"
-
+carta.style.display = "block";
 }
 
 }
+
 
 // contador relacionamento
 
+const inicio = new Date("2023-12-06 00:00:00");
+
 function atualizarContador(){
 
-let inicio=new Date("2023-12-06")
+const agora = new Date();
+const diff = agora - inicio;
 
-let agora=new Date()
+const dias = Math.floor(diff / (1000*60*60*24));
+const horas = Math.floor((diff/(1000*60*60)) % 24);
+const minutos = Math.floor((diff/(1000*60)) % 60);
+const segundos = Math.floor((diff/1000) % 60);
 
-let diff=agora-inicio
-
-let dias=Math.floor(diff/(1000*60*60*24))
-
-let anos=Math.floor(dias/365)
-
-let meses=Math.floor((dias%365)/30)
-
-let diasRestantes=dias%30
-
-document.getElementById("contador").innerHTML=
-
-anos+" anos "+
-meses+" meses "+
-diasRestantes+" dias ❤️"
+document.getElementById("contador").innerHTML =
+dias+" dias "+
+horas+" horas "+
+minutos+" minutos "+
+segundos+" segundos ❤️";
 
 }
 
-setInterval(atualizarContador,1000)
+setInterval(atualizarContador,1000);
 
-atualizarContador()
 
-// carrossel fotos
+// slider fotos
 
-let index=0
+let index = 0;
+const fotos = document.querySelectorAll(".slider img");
 
 setInterval(()=>{
 
-let slider=document.querySelector(".slider")
+fotos.forEach(f=>f.style.display="none");
 
-index++
+index++;
 
-if(index>=slider.children.length){
-
-index=0
-
+if(index>=fotos.length){
+index=0;
 }
 
-slider.scrollTo({
+fotos[index].style.display="block";
 
-left:330*index,
-behavior:"smooth"
+},3000);
 
-})
 
-},3000)
-
-// chuva de corações
+// botão eu te amo
 
 function chuvaCoracoes(){
 
-for(let i=0;i<60;i++){
+// mensagem
 
-let heart=document.createElement("div")
+let msg = document.createElement("div");
 
-heart.className="heart"
+msg.innerHTML = "Eu também te amo ❤️";
 
-heart.innerHTML="❤️"
+msg.style.position = "fixed";
+msg.style.top = "50%";
+msg.style.left = "50%";
+msg.style.transform = "translate(-50%,-50%)";
+msg.style.fontSize = "40px";
+msg.style.fontWeight = "bold";
+msg.style.textShadow = "0 0 20px red";
+msg.style.zIndex = "1000";
 
-heart.style.left=Math.random()*100+"vw"
-
-heart.style.animationDuration=(Math.random()*3+2)+"s"
-
-document.body.appendChild(heart)
+document.body.appendChild(msg);
 
 setTimeout(()=>{
+msg.remove();
+},4000);
 
-heart.remove()
 
-},5000)
+// emojis
+
+let emojis = ["🥰","❤️","🫶🏻"];
+
+for(let i=0;i<40;i++){
+
+let emoji = document.createElement("div");
+
+emoji.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+
+emoji.style.position = "fixed";
+emoji.style.top = "-10px";
+emoji.style.left = Math.random()*100+"vw";
+emoji.style.fontSize = "25px";
+emoji.style.animation = "cair 5s linear";
+
+document.body.appendChild(emoji);
+
+setTimeout(()=>{
+emoji.remove();
+},5000);
 
 }
 
 }
 
-// estrelas fundo
 
-const canvas=document.getElementById("stars")
-const ctx=canvas.getContext("2d")
+// fundo estrelado
 
-canvas.width=window.innerWidth
-canvas.height=window.innerHeight
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
 
-let stars=[]
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let estrelas=[];
 
 for(let i=0;i<200;i++){
 
-stars.push({
-
+estrelas.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-size:Math.random()*2,
-speed:Math.random()*0.3
-
-})
+r:Math.random()*2
+});
 
 }
 
-function drawStars(){
+function desenhar(){
 
-ctx.clearRect(0,0,canvas.width,canvas.height)
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
-ctx.fillStyle="white"
+ctx.fillStyle="white";
 
-stars.forEach(s=>{
+estrelas.forEach(e=>{
 
-s.y+=s.speed
+ctx.beginPath();
+ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
+ctx.fill();
 
-if(s.y>canvas.height){
+e.y += 0.2;
 
-s.y=0
+if(e.y > canvas.height){
+e.y = 0;
+}
+
+});
+
+requestAnimationFrame(desenhar);
 
 }
 
-ctx.beginPath()
+desenhar();
+// estrela cadente
 
-ctx.arc(s.x,s.y,s.size,0,Math.PI*2)
+function estrelaCadente(){
 
-ctx.fill()
+let estrela = {
+x: Math.random() * canvas.width,
+y: 0,
+tamanho: 2 + Math.random()*2,
+velocidadeX: 6,
+velocidadeY: 6
+};
 
-})
+function animar(){
 
-requestAnimationFrame(drawStars)
+ctx.beginPath();
+ctx.arc(estrela.x, estrela.y, estrela.tamanho, 0, Math.PI*2);
+ctx.fillStyle="white";
+ctx.fill();
+
+estrela.x += estrela.velocidadeX;
+estrela.y += estrela.velocidadeY;
+
+if(estrela.x < canvas.width && estrela.y < canvas.height){
+requestAnimationFrame(animar);
+}
 
 }
 
-drawStars()
+animar();
+
+}
+
+// aparecer estrela aleatoriamente
+
+setInterval(()=>{
+
+if(Math.random() < 0.4){
+estrelaCadente();
+}
+
+},4000);
