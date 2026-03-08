@@ -38,7 +38,7 @@ segundos+" segundos ❤️";
 setInterval(atualizarContador,1000);
 
 
-// slider fotos
+// slider fotos automático
 
 let index = 0;
 const fotos = document.querySelectorAll(".slider img");
@@ -62,7 +62,7 @@ fotos[index].style.display="block";
 
 function chuvaCoracoes(){
 
-// mensagem
+// mensagem no centro
 
 let msg = document.createElement("div");
 
@@ -84,11 +84,13 @@ msg.remove();
 },4000);
 
 
-// emojis
+// chuva de emojis
 
 let emojis = ["🥰","❤️","🫶🏻"];
 
-for(let i=0;i<40;i++){
+for(let i=0;i<80;i++){
+
+setTimeout(()=>{
 
 let emoji = document.createElement("div");
 
@@ -97,7 +99,7 @@ emoji.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
 emoji.style.position = "fixed";
 emoji.style.top = "-10px";
 emoji.style.left = Math.random()*100+"vw";
-emoji.style.fontSize = "25px";
+emoji.style.fontSize = "26px";
 emoji.style.animation = "cair 5s linear";
 
 document.body.appendChild(emoji);
@@ -105,6 +107,8 @@ document.body.appendChild(emoji);
 setTimeout(()=>{
 emoji.remove();
 },5000);
+
+}, i * 120);
 
 }
 
@@ -156,6 +160,8 @@ requestAnimationFrame(desenhar);
 }
 
 desenhar();
+
+
 // estrela cadente
 
 function estrelaCadente(){
@@ -187,8 +193,6 @@ requestAnimationFrame(animar);
 animar();
 
 }
-
-// aparecer estrela aleatoriamente
 
 setInterval(()=>{
 
