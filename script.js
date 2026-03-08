@@ -1,144 +1,151 @@
-// ABRIR CARTA
 function abrirCarta(){
-let carta = document.getElementById("carta");
 
-if(carta.style.display === "block"){
-carta.style.display = "none";
+let carta=document.getElementById("carta")
+
+if(carta.style.display==="block"){
+
+carta.style.display="none"
+
 }else{
-carta.style.display = "block";
+
+carta.style.display="block"
+
 }
+
 }
 
+// contador relacionamento
 
-
-// CONTADOR DE TEMPO JUNTOS
 function atualizarContador(){
 
-let inicio = new Date("2024-01-01 00:00:00"); // coloque a data que vocês começaram
-let agora = new Date();
+let inicio=new Date("2023-12-06")
 
-let diferenca = agora - inicio;
+let agora=new Date()
 
-let dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
-let horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
-let minutos = Math.floor((diferenca / (1000 * 60)) % 60);
-let segundos = Math.floor((diferenca / 1000) % 60);
+let diff=agora-inicio
 
-document.getElementById("contador").innerHTML =
-dias + " dias " +
-horas + " horas " +
-minutos + " minutos " +
-segundos + " segundos";
+let dias=Math.floor(diff/(1000*60*60*24))
 
-}
+let anos=Math.floor(dias/365)
 
-setInterval(atualizarContador,1000);
+let meses=Math.floor((dias%365)/30)
 
+let diasRestantes=dias%30
 
+document.getElementById("contador").innerHTML=
 
-// SLIDER DE FOTOS AUTOMÁTICO
-let index = 0;
-
-function trocarFotos(){
-
-let fotos = document.querySelectorAll(".slider img");
-
-for(let i = 0; i < fotos.length; i++){
-fotos[i].style.display = "none";
-}
-
-index++;
-
-if(index > fotos.length){
-index = 1;
-}
-
-fotos[index-1].style.display = "block";
-
-setTimeout(trocarFotos,3000);
+anos+" anos "+
+meses+" meses "+
+diasRestantes+" dias ❤️"
 
 }
 
-trocarFotos();
+setInterval(atualizarContador,1000)
 
+atualizarContador()
 
+// carrossel fotos
 
-// CHUVA DE CORAÇÕES ❤️
+let index=0
+
+setInterval(()=>{
+
+let slider=document.querySelector(".slider")
+
+index++
+
+if(index>=slider.children.length){
+
+index=0
+
+}
+
+slider.scrollTo({
+
+left:330*index,
+behavior:"smooth"
+
+})
+
+},3000)
+
+// chuva de corações
+
 function chuvaCoracoes(){
 
-alert("Eu também te amo ❤️");
+for(let i=0;i<60;i++){
 
-for(let i = 0; i < 80; i++){
+let heart=document.createElement("div")
 
-let coracao = document.createElement("div");
+heart.className="heart"
 
-coracao.innerHTML = "❤️";
-coracao.style.position = "fixed";
-coracao.style.top = "-10px";
-coracao.style.left = Math.random() * 100 + "vw";
-coracao.style.fontSize = (20 + Math.random() * 30) + "px";
-coracao.style.animation = "cair 5s linear";
-coracao.style.zIndex = "9999";
+heart.innerHTML="❤️"
 
-document.body.appendChild(coracao);
+heart.style.left=Math.random()*100+"vw"
 
-setTimeout(() => {
-coracao.remove();
-},5000);
+heart.style.animationDuration=(Math.random()*3+2)+"s"
 
-}
+document.body.appendChild(heart)
+
+setTimeout(()=>{
+
+heart.remove()
+
+},5000)
 
 }
 
+}
 
+// estrelas fundo
 
-// FUNDO ESTRELADO
-let canvas = document.getElementById("stars");
-let ctx = canvas.getContext("2d");
+const canvas=document.getElementById("stars")
+const ctx=canvas.getContext("2d")
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
 
-let estrelas = [];
+let stars=[]
 
-for(let i = 0; i < 150; i++){
+for(let i=0;i<200;i++){
 
-estrelas.push({
-x: Math.random() * canvas.width,
-y: Math.random() * canvas.height,
-raio: Math.random() * 2
-});
+stars.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2,
+speed:Math.random()*0.3
+
+})
 
 }
 
-function desenharEstrelas(){
+function drawStars(){
 
-ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.clearRect(0,0,canvas.width,canvas.height)
 
-ctx.fillStyle = "white";
+ctx.fillStyle="white"
 
-for(let i = 0; i < estrelas.length; i++){
+stars.forEach(s=>{
 
-let e = estrelas[i];
+s.y+=s.speed
 
-ctx.beginPath();
-ctx.arc(e.x, e.y, e.raio, 0, Math.PI * 2);
-ctx.fill();
+if(s.y>canvas.height){
 
-}
-
-requestAnimationFrame(desenharEstrelas);
+s.y=0
 
 }
 
-desenharEstrelas();
+ctx.beginPath()
 
+ctx.arc(s.x,s.y,s.size,0,Math.PI*2)
 
+ctx.fill()
 
-// AJUSTAR TELA
-window.addEventListener("resize",function(){
+})
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+requestAnimationFrame(drawStars)
 
-});
+}
+
+drawStars()
