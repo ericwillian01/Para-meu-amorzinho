@@ -2,43 +2,89 @@
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Para o Amor da Minha Vida ❤️</title>
+<title>Nosso Amor ❤️</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+
+body{
+font-family: Arial;
+text-align:center;
+background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+margin:0;
+padding:0;
+color:white;
+}
+
+h1{
+margin-top:30px;
+font-size:40px;
+}
+
+p{
+font-size:20px;
+}
+
+.galeria{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:10px;
+margin:20px;
+}
+
+.galeria img{
+width:150px;
+height:150px;
+object-fit:cover;
+border-radius:15px;
+box-shadow:0 0 10px rgba(0,0,0,0.3);
+}
+
+button{
+padding:15px 25px;
+font-size:18px;
+border:none;
+border-radius:10px;
+background:#ff4d6d;
+color:white;
+cursor:pointer;
+margin:20px;
+}
+
+button:hover{
+background:#ff1e4d;
+}
+
+.heart{
+position:fixed;
+top:-10px;
+font-size:20px;
+animation:fall 5s linear infinite;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(-10px);
+opacity:1;
+}
+100%{
+transform:translateY(100vh);
+opacity:0;
+}
+}
+
+</style>
 
 </head>
 
 <body>
 
-<canvas id="stars"></canvas>
+<h1>❤️ Nosso Amor ❤️</h1>
 
-<h1>❤️ Para o Amor da Minha Vida ❤️</h1>
-
-<div class="envelope" onclick="abrirCarta()">
-
-<div class="frente">💌</div>
-
-</div>
-
-<div id="carta" class="carta">
-
-<p>
-Desde que você entrou na minha vida tudo mudou.
-Seu sorriso ilumina meus dias e cada momento ao seu lado
-é especial para mim meu amor.
-
-Eu te amo muito ❤️
-</p>
-
-</div>
-
-<h2>⏳ Nosso tempo juntos</h2>
-
-<div id="contador"></div>
+<p>Desde 06/12/2023</p>
 
 <h2>Nossa música 🎵</h2>
 
@@ -50,9 +96,9 @@ frameborder="0"
 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
 </iframe>
 
-<h2>Nossos momentos 📸</h2>
+<h2>Nossas Memórias 📸</h2>
 
-<div class="slider">
+<div class="galeria">
 
 <img src="foto1.jpg">
 <img src="foto2.jpg">
@@ -67,11 +113,35 @@ allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-pictur
 
 </div>
 
-<br>
+<button onclick="cairCoracoes()">Eu te amo ❤️</button>
 
-<button onclick="chuvaCoracoes()" class="botao">Eu te amo ❤️</button>
+<script>
 
-<script src="script.js"></script>
+function cairCoracoes(){
+
+for(let i=0;i<30;i++){
+
+let heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+
+heart.style.animationDuration=(Math.random()*3+2)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},5000);
+
+}
+
+}
+
+</script>
 
 </body>
 </html>
