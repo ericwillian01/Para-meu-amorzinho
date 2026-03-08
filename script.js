@@ -1,127 +1,151 @@
-body{
+function abrirCarta(){
 
-margin:0;
-font-family:Arial;
-text-align:center;
-color:white;
-overflow-x:hidden;
+let carta=document.getElementById("carta")
 
-background:linear-gradient(
-180deg,
-#020024,
-#090979,
-#000000
-);
+if(carta.style.display==="block"){
 
-}
+carta.style.display="none"
 
-canvas{
+}else{
 
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
-
-}
-
-h1{
-
-margin-top:40px;
-
-}
-
-.envelope{
-
-font-size:60px;
-cursor:pointer;
-margin-top:20px;
-transition:0.3s;
-
-}
-
-.envelope:hover{
-
-transform:scale(1.2);
-
-}
-
-.carta{
-
-display:none;
-background:white;
-color:black;
-padding:25px;
-border-radius:15px;
-max-width:420px;
-margin:20px auto;
-box-shadow:0 10px 30px rgba(0,0,0,0.5);
-
-}
-
-#contador{
-
-font-size:22px;
-margin:15px;
-
-}
-
-.slider{
-
-width:320px;
-margin:auto;
-display:flex;
-overflow:hidden;
-
-}
-
-.slider img{
-
-width:320px;
-border-radius:15px;
-margin-right:10px;
-transition:0.4s;
-
-}
-
-.slider img:hover{
-
-transform:scale(1.1);
-
-}
-
-.botao{
-
-padding:15px 25px;
-font-size:18px;
-background:#ff4d6d;
-border:none;
-border-radius:12px;
-color:white;
-cursor:pointer;
-
-}
-
-.botao:hover{
-
-background:#ff1e4d;
-
-}
-
-.heart{
-
-position:fixed;
-top:-10px;
-font-size:28px;
-animation:fall linear forwards;
-
-}
-
-@keyframes fall{
-
-to{
-
-transform:translateY(110vh);
+carta.style.display="block"
 
 }
 
 }
+
+// contador relacionamento
+
+function atualizarContador(){
+
+let inicio=new Date("2023-12-06")
+
+let agora=new Date()
+
+let diff=agora-inicio
+
+let dias=Math.floor(diff/(1000*60*60*24))
+
+let anos=Math.floor(dias/365)
+
+let meses=Math.floor((dias%365)/30)
+
+let diasRestantes=dias%30
+
+document.getElementById("contador").innerHTML=
+
+anos+" anos "+
+meses+" meses "+
+diasRestantes+" dias ❤️"
+
+}
+
+setInterval(atualizarContador,1000)
+
+atualizarContador()
+
+// carrossel fotos
+
+let index=0
+
+setInterval(()=>{
+
+let slider=document.querySelector(".slider")
+
+index++
+
+if(index>=slider.children.length){
+
+index=0
+
+}
+
+slider.scrollTo({
+
+left:330*index,
+behavior:"smooth"
+
+})
+
+},3000)
+
+// chuva de corações
+
+function chuvaCoracoes(){
+
+for(let i=0;i<60;i++){
+
+let heart=document.createElement("div")
+
+heart.className="heart"
+
+heart.innerHTML="❤️"
+
+heart.style.left=Math.random()*100+"vw"
+
+heart.style.animationDuration=(Math.random()*3+2)+"s"
+
+document.body.appendChild(heart)
+
+setTimeout(()=>{
+
+heart.remove()
+
+},5000)
+
+}
+
+}
+
+// estrelas fundo
+
+const canvas=document.getElementById("stars")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let stars=[]
+
+for(let i=0;i<200;i++){
+
+stars.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2,
+speed:Math.random()*0.3
+
+})
+
+}
+
+function drawStars(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+stars.forEach(s=>{
+
+s.y+=s.speed
+
+if(s.y>canvas.height){
+
+s.y=0
+
+}
+
+ctx.beginPath()
+
+ctx.arc(s.x,s.y,s.size,0,Math.PI*2)
+
+ctx.fill()
+
+})
+
+requestAnimationFrame(drawStars)
+
+}
+
+drawStars()
