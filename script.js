@@ -1,96 +1,127 @@
-function abrirCarta(){
+body{
 
-let carta = document.getElementById("carta")
+margin:0;
+font-family:Arial;
+text-align:center;
+color:white;
+overflow-x:hidden;
 
-if(carta.style.display === "block"){
-carta.style.display = "none"
-}else{
-carta.style.display = "block"
-}
-
-}
-
-// contador relacionamento
-
-function atualizarContador(){
-
-let inicio = new Date("2024-01-01")
-
-let hoje = new Date()
-
-let diff = hoje - inicio
-
-let dias = Math.floor(diff/(1000*60*60*24))
-
-document.getElementById("contador").innerHTML =
-dias + " dias juntos ❤️"
+background:linear-gradient(
+180deg,
+#020024,
+#090979,
+#000000
+);
 
 }
 
-setInterval(atualizarContador,1000)
+canvas{
 
-atualizarContador()
-
-// corações caindo
-
-function criarCoracao(){
-
-const heart = document.createElement("div")
-
-heart.className = "heart"
-
-heart.innerHTML = "❤️"
-
-heart.style.left = Math.random()*100+"vw"
-
-heart.style.animationDuration = (Math.random()*3+2)+"s"
-
-document.body.appendChild(heart)
-
-setTimeout(()=>{
-heart.remove()
-},5000)
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
 
 }
 
-setInterval(criarCoracao,300)
+h1{
 
-// estrelas animadas
-
-const canvas = document.getElementById("stars")
-const ctx = canvas.getContext("2d")
-
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
-
-let stars = []
-
-for(let i=0;i<150;i++){
-
-stars.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-size:Math.random()*2
-})
+margin-top:40px;
 
 }
 
-function drawStars(){
+.envelope{
 
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-ctx.fillStyle="white"
-
-stars.forEach(s=>{
-
-ctx.beginPath()
-ctx.arc(s.x,s.y,s.size,0,Math.PI*2)
-ctx.fill()
-
-})
-
-requestAnimationFrame(drawStars)
+font-size:60px;
+cursor:pointer;
+margin-top:20px;
+transition:0.3s;
 
 }
 
-drawStars()
+.envelope:hover{
+
+transform:scale(1.2);
+
+}
+
+.carta{
+
+display:none;
+background:white;
+color:black;
+padding:25px;
+border-radius:15px;
+max-width:420px;
+margin:20px auto;
+box-shadow:0 10px 30px rgba(0,0,0,0.5);
+
+}
+
+#contador{
+
+font-size:22px;
+margin:15px;
+
+}
+
+.slider{
+
+width:320px;
+margin:auto;
+display:flex;
+overflow:hidden;
+
+}
+
+.slider img{
+
+width:320px;
+border-radius:15px;
+margin-right:10px;
+transition:0.4s;
+
+}
+
+.slider img:hover{
+
+transform:scale(1.1);
+
+}
+
+.botao{
+
+padding:15px 25px;
+font-size:18px;
+background:#ff4d6d;
+border:none;
+border-radius:12px;
+color:white;
+cursor:pointer;
+
+}
+
+.botao:hover{
+
+background:#ff1e4d;
+
+}
+
+.heart{
+
+position:fixed;
+top:-10px;
+font-size:28px;
+animation:fall linear forwards;
+
+}
+
+@keyframes fall{
+
+to{
+
+transform:translateY(110vh);
+
+}
+
+}
